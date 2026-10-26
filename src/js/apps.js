@@ -68,12 +68,19 @@
         var used = {};
         var out = [];
         (cfg.apps || []).forEach(function (entry) {
-            var re = entry.match ? new RegExp(entry.match, 'i') : null;
-            var candidates = apps.filter(function (a) {
-                if (used[a.id]) return false;
-                if (entry.id) return a.id === entry.id;
-                return re && (re.test(a.id) || re.test(a.name));
-            });
+            // `match` may be a list tried in order, so a preferred app (TizenTube) wins over a
+            // fallback (the stock YouTube app) and only one tile appears.
+            var patterns = entry.match ? [].concat(entry.match) : [];
+            var candidates = [];
+            if (entry.id) {
+                candidates = apps.filter(function (a) { return !used[a.id] && a.id === entry.id; });
+            }
+            for (var i = 0; i < patterns.length && !candidates.length; i++) {
+                var re = new RegExp(patterns[i], 'i');
+                candidates = apps.filter(function (a) {
+                    return !used[a.id] && (re.test(a.id) || re.test(a.name));
+                });
+            }
             // Prefer a visible consumer app when several match (e.g. Netflix and a Netflix service).
             var app = candidates.find(isConsumer) || candidates[0];
             if (app) {

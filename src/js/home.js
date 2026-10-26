@@ -129,7 +129,7 @@
     // Console tile for Settings lists: brand colours and logo only.
     function miniInputTile(input) {
         var brand = findBrand(input.brand || '');
-        return miniTile({ label: input.label, brand: brand && { key: brand.key, bg: brand.bg, fg: brand.fg, mark: brand.mark } });
+        return miniTile({ label: input.label, brand: brand && { key: brand.key, bg: brand.bg, fg: brand.fg, mark: brand.mark, text: brand.text } });
     }
 
     // ---------- Home content

@@ -110,7 +110,7 @@
         return [
             { label: 'Background', value: wallpaperSummary(), run: function () { UI.show('bg'); } },
             { label: 'Apps on Home', value: Home.homeItems().length + ' apps', run: function () { UI.show('homeapps'); } },
-            { label: 'Consoles', value: shown + ' on Home', run: function () { UI.show('consoles'); } },
+            { label: 'Inputs', value: shown + ' on Home', run: function () { UI.show('consoles'); } },
             { label: 'Appearance', value: Appearance.font(a.font).label + ' · ' + (a.clock === '12h' ? '12-hour' : '24-hour'), run: function () { UI.show('appearance'); } },
             { label: 'Navigation sound', value: soundSummary(), run: function () { UI.show('sound-settings'); } },
             { label: 'Screen saver', value: screensaverSummary(), run: function () { UI.show('screensaver-settings'); } },
@@ -516,7 +516,7 @@
                 run: function () { consoleMenu(i); }
             };
         });
-        entries.push({ label: '+ Add a console', value: '', run: addConsole });
+        entries.push({ label: '+ Add an input', value: '', run: addConsole });
         return entries;
     }
 
@@ -598,9 +598,9 @@
         var used = {};
         Home.inputs().forEach(function (i) { used[i.hdmi] = true; });
         var port = [1, 2, 3, 4].find(function (n) { return !used[n]; }) || 1;
-        editInputs(function (l) { l.push({ hdmi: port, label: 'Console', brand: '' }); });
+        editInputs(function (l) { l.push({ hdmi: port, label: 'HDMI ' + port, brand: '' }); });
         var index = Home.inputs().length - 1;
-        rename('Console', function (name) { editInputs(function (l) { l[index].label = name; }); });
+        rename('Name', function (name) { editInputs(function (l) { l[index].label = name; }); });
     }
 
     // ---------- Rename dialog (uses Samsung's on-screen keyboard)

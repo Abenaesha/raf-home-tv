@@ -13,7 +13,7 @@
     }
 
     var apps = [
-        app('Arn0Lnchr0.Launcher', 'Arn0 Launcher'),
+        app('RafHomeTV1.Launcher', 'Raf Home'),
         app('xvvl3S1TT1.TizenTubeStandalone', 'TizenTube'),
         app('com.samsung.tv.cobalt-yt', 'YouTube'),
         app('org.tizen.netflix-app', 'Netflix'),
@@ -29,6 +29,11 @@
         app('RtveTvApp0.RTVEPlay', 'RTVE Play'),
         app('Atresplay0.atresplayer', 'atresplayer'),
         app('org.tizen.browser', 'Internet'),
+        // UK apps (illustrative ids, matched by name in config.js)
+        app('ukBBCipl01.iPlayer', 'BBC iPlayer'),
+        app('ukITVX0001.ITVX', 'ITVX'),
+        app('ukChan4001.Channel4', 'Channel 4'),
+        app('Overscan01.Overscan', 'Overscan'),
         // Noise that the consumer filter should hide
         app('com.samsung.tv.ep-dataservice-app', 'ep-dataservice-app'),
         app('adplatform.ADPlayer', 'ADPlayer'),
@@ -38,8 +43,8 @@
     ];
 
     var sources = {
-        connected: [{ type: 'TV', number: 1 }, { type: 'HDMI', number: 2 }, { type: 'HDMI', number: 4 }],
-        disconnected: [{ type: 'HDMI', number: 1 }, { type: 'HDMI', number: 3 }]
+        connected: [{ type: 'TV', number: 1 }, { type: 'HDMI', number: 1 }],
+        disconnected: [{ type: 'HDMI', number: 2 }, { type: 'HDMI', number: 3 }]
     };
     var currentSource = sources.connected[0];
 
@@ -57,7 +62,7 @@
                 later(ok);
             },
             getCurrentApplication: function () {
-                return { appInfo: { id: 'Arn0Lnchr0.Launcher' }, exit: function () {}, hide: function () {} };
+                return { appInfo: { id: 'RafHomeTV1.Launcher' }, exit: function () {}, hide: function () {} };
             }
         },
         systeminfo: {

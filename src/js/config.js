@@ -12,27 +12,30 @@
  * inputs: HDMI ports shown in the second row. Set `hdmi` to the port each device is plugged into.
  */
 window.LAUNCHER_CONFIG = {
+    // Tuned for a UK Samsung AU7100. Entries that are not installed are simply skipped, and a
+    // list in `match` is tried in order, so TizenTube (ad-free) wins over the stock YouTube app.
     apps: [
-        { id: 'xvvl3S1TT1.TizenTubeStandalone', label: 'YouTube', brand: 'youtube' },
-        { id: 'rJeHak5zRg.Spotify', label: 'Spotify' },
-        { id: 'Jz7aUrV2Q4.Twitch', label: 'Twitch' },
-        { id: 'E0P3lRI4H7.MYTF1', label: 'TF1+' },
-        { id: 'org.tizen.netflix-app', label: 'Netflix' },
-        { id: 'org.tizen.primevideo', label: 'Prime Video' },
-        { id: 'MCmYXNxgcu.DisneyPlus', label: 'Disney+' },
-        { id: 'com.samsung.tv.aria-video', label: 'Apple TV' }
+        { match: ['tizentube', 'youtube'], label: 'YouTube', brand: 'youtube' },
+        { id: 'org.tizen.netflix-app', match: 'netflix', label: 'Netflix' },
+        { match: 'iplayer', label: 'BBC iPlayer' },
+        { match: ['itvx', '\\bitv\\b'], label: 'ITVX' },
+        { match: ['channel ?4', '\\b4od\\b'], label: 'Channel 4' },
+        { match: 'prime ?video', label: 'Prime Video' },
+        { match: 'disney', label: 'Disney+' },
+        { match: 'spotify', label: 'Spotify' },
+        { id: 'com.samsung.tv.aria-video', match: 'apple ?tv', label: 'Apple TV' },
+        // Overscan (desktop-style browser) if it is installed, otherwise Samsung's Internet app.
+        { match: ['overscan', '^org\\.tizen\\.browser$', '^internet$'], label: 'Web' }
     ],
 
+    // HDMI ports shown in the second row. Rename them (e.g. "PlayStation") from Settings → Inputs
+    // on the TV, or here with a brand: 'playstation' | 'xbox' | 'switch'.
     inputs: [
-        { hdmi: 1, label: 'Nintendo Switch 2', brand: 'switch' },
-        { hdmi: 2, label: 'PlayStation 5', brand: 'playstation' },
-        { hdmi: 4, label: 'Xbox Series X', brand: 'xbox' }
+        { hdmi: 1, label: 'Input 1' },
+        { hdmi: 2, label: 'Input 2' },
+        { hdmi: 3, label: 'Input 3' }
     ],
 
-    // How an input tile switches the TV. See README "HDMI inputs".
-    //   'switch+viewer'  set the TV source, then open Samsung's TV viewer (default)
-    //   'switch'         only set the TV source
-    //   'inapp'          show the input full screen inside the launcher (Back returns)
     inputMethod: 'switch+viewer',
 
     locale: 'en-GB',

@@ -19,6 +19,8 @@
  *
  * This engine lacks `inset`, `aspect-ratio`, `overflow: clip`, the individual transform
  * properties, `color-mix()`, container queries and `:has()`. Grid, gap, sticky and `clamp()` work.
+ *
+ * Tizen 6.0 (2021, Chromium 76) also lacks flex `gap` and `clamp()`: use margins on flex rows.
  */
 @font-face {
     font-family: "Manrope";
@@ -803,7 +805,6 @@ html.preview, html.preview body {
     right: var(--edge);
     bottom: 48px;
     display: flex;
-    gap: 40px;
     font-size: 22px;
     color: #a3a8b3;
 }
@@ -813,8 +814,11 @@ html.preview, html.preview body {
 .hint {
     display: flex;
     align-items: center;
-    gap: 12px;
 }
+
+/* Tizen 6.0 (Chromium 76) has no flex gap: spacing is done with margins. */
+.hint + .hint { margin-left: 40px; }
+.hint > * + * { margin-left: 12px; }
 
 .hint-key {
     border: 1px solid rgba(255, 255, 255, 0.3);
@@ -855,8 +859,9 @@ html.preview, html.preview body {
     top: 420px;
     left: var(--edge);
     display: flex;
-    gap: 36px;
 }
+
+.probe-row > * + * { margin-left: 36px; }
 
 .probe-tile {
     width: 300px;
@@ -945,7 +950,6 @@ html.preview, html.preview body {
     display: flex;
     /* Bottom-aligned so the weather detail and the date share a baseline. */
     align-items: flex-end;
-    gap: 36px;
     transition: transform 1200ms ease-out;
 }
 
@@ -957,6 +961,8 @@ html.preview, html.preview body {
 .ss-clock-main {
     text-align: right;
 }
+
+.ss-clock.with-weather .ss-clock-main { margin-left: 36px; }
 
 /* Only drawn when there is a reading to divide it from. */
 .ss-clock.with-weather .ss-clock-main {
@@ -986,8 +992,9 @@ html.preview, html.preview body {
 .ss-wx-now {
     display: flex;
     align-items: center;
-    gap: 14px;
 }
+
+.ss-wx-now > * + * { margin-left: 14px; }
 
 .ss-wx-icon svg {
     display: block;

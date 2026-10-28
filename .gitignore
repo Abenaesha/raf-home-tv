@@ -63,3 +63,6 @@ native-snapshot.json
 .AppleDouble
 .Spotlight-V100
 .Trashes
+
+# Local tools (Apps2Samsung CLI), downloaded by scripts/setup-cli.sh
+.tools/

@@ -34,3 +34,15 @@ A mismatch forces an uninstall, which clears the launcher's saved settings.
   Wikipedia, BBC). Typing an address like `bbc.co.uk/sport` opens it directly.
 - Results open in the TV's browser. Engines are editable in `src/js/config.js` (`search.engines`).
 - Recent searches and the chosen engine are stored on the TV (`rafhome.search.v1`).
+
+## Automatic install on push
+One-time setup on the Mac: `npm run setup-cli`. It downloads the Apps2Samsung CLI into `.tools/`
+(checksum-verified, gitignored) and turns on the push hook.
+
+- `git push`: if the push includes a new `release/raf-home.wgt`, the hook installs it on the TV
+  and opens it. If the TV is off or unreachable it only warns; the push always goes through.
+  Skip once with `RAF_NO_DEPLOY=1 git push`.
+- `npm run deploy`: install the current package now, without pushing.
+- `npm run release`: build and copy the package into `release/`.
+- TV address: 192.168.1.102 by default; override with `RAF_TV_IP=...`. Reserving that address for
+  the TV in your router stops it from changing.

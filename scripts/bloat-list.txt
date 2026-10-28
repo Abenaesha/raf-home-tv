@@ -1,29 +1,28 @@
 # App IDs for `npm run debloat` to remove from the TV. One ID per line.
-# Refresh IDs any time with:  npm run list-apps
+#
+# IMPORTANT: the developer connection can only remove apps it installed itself
+# (your own sideloaded .wgt apps). Samsung's store/preinstalled apps refuse removal
+# over sdb - the CLI returns "can only be removed from the TV's own Apps settings" -
+# even though list-apps shows removable:true. And those re-download on a hard restart.
+# So this list is effectively for future sideloaded junk, not the Samsung bloat.
+#
+# Refresh IDs with:  npm run list-apps
 # Lines starting with # are ignored; text after a # on a line is a note.
-# Re-run `npm run debloat` after a hard restart to wipe these again.
 
-# --- removed by default ---
-jjLprV8rdv.QVCUK                 # QVC+ (shopping channel)
-GHI3a0zMSx.XboxGamePass          # Xbox Game Pass
-com.samsung.tv.samsung-health    # Samsung Health
-com.samsung.tv.gallery           # Gallery
-3KA0pm7a7V.TubiTV                # Tubi (ad-supported free movies)
-9Ur5IzDKqV.TizenYouTube          # stock YouTube (you use TizenTube instead)
-org.tizen.netflix-app            # Netflix
-DqEoaplKlw.bbchybrid             # BBC iPlayer
-OEvCiupaFR.ITVHub                # ITVX
-OCaxbgg9v6.chfourctv             # Channel 4
-org.tizen.primevideo             # Prime Video
-MCmYXNxgcu.DisneyPlus            # Disney+
-com.samsung.tv.aria-video        # Apple TV
+# --- Samsung apps you wanted gone (kept here for reference; sdb CANNOT remove these,
+#     only the TV: Apps > highlight the app > down > Delete - and they come back on restart) ---
+# jjLprV8rdv.QVCUK                 # QVC+
+# GHI3a0zMSx.XboxGamePass          # Xbox Game Pass
+# com.samsung.tv.samsung-health    # Samsung Health
+# com.samsung.tv.gallery           # Gallery
+# 3KA0pm7a7V.TubiTV                # Tubi
+# 9Ur5IzDKqV.TizenYouTube          # stock YouTube
+# org.tizen.netflix-app            # Netflix
+# DqEoaplKlw.bbchybrid             # BBC iPlayer
+# OEvCiupaFR.ITVHub                # ITVX
+# OCaxbgg9v6.chfourctv             # Channel 4
+# org.tizen.primevideo             # Prime Video
+# MCmYXNxgcu.DisneyPlus            # Disney+
+# com.samsung.tv.aria-video        # Apple TV
 
-# --- optional: uncomment any you also want gone ---
-# EkzyZtmneG.My5                 # Channel 5 (My5)
-# VQr0RGkyS9.UKTVPlay            # U (UKTV Play)
-# 1Qb6IoAcGC.NowTV              # NOW (Sky)
-# GR7TWEBh5d.BBCSounds          # BBC Sounds (radio)
-# kIciSQlYEM.plex               # Plex (you installed it back in 2022)
-# LzU5yAFXeg.emanual            # e-Manual (the TV's built-in manual)
-
-# --- kept: Raf Home, TizenTube, TizenBrew, Browser ---
+# --- add sideloaded app IDs below to have debloat remove them ---

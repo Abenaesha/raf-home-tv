@@ -55,6 +55,8 @@ while IFS= read -r line; do
         echo "done"; removed=$((removed+1))
     elif printf '%s' "$out" | grep -qi 'not installed\|no such\|not found\|does not exist'; then
         echo "not there"; gone=$((gone+1))
+    elif printf '%s' "$out" | grep -qi "Apps settings\|preinstalled\|store and preinstalled"; then
+        echo "Samsung app - can only be removed in the TV's Apps menu"; kept=$((kept+1))
     else
         echo "kept (protected or in use)"; kept=$((kept+1))
     fi

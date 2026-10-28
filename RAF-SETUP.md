@@ -43,6 +43,9 @@ One-time setup on the Mac: `npm run setup-cli`. It downloads the Apps2Samsung CL
   and opens it. If the TV is off or unreachable it only warns; the push always goes through.
   Skip once with `RAF_NO_DEPLOY=1 git push`.
 - `npm run deploy`: install the current package now, without pushing.
+- `RAF_ALLOW_REMOVE=1 npm run deploy`: when the TV's copy was signed by another certificate
+  (e.g. first installed from the Apps2Samsung window), remove it and reinstall. This erases
+  Raf Home's settings on the TV; later updates keep them.
 - `npm run release`: build and copy the package into `release/`.
 - TV address: 192.168.1.102 by default; override with `RAF_TV_IP=...`. Reserving that address for
   the TV in your router stops it from changing.

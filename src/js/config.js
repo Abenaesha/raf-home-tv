@@ -67,8 +67,10 @@ window.LAUNCHER_CONFIG = {
      * for one route to open before trying the next.
      */
     share: {
+        // YouTube links sent from the phone open here. TizenTube first (ad-free); the stock
+        // YouTube app is only a fallback if it is reinstalled; then the browser.
+        tizenTubeAppId: 'xvvl3S1TT1.TizenTubeStandalone',
         youtubeAppId: '111299001912',
-        dialUrl: 'http://127.0.0.1:8080/ws/apps/YouTube',
         handoffWaitMs: 5000
     },
 

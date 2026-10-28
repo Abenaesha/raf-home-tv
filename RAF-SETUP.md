@@ -71,5 +71,8 @@ One-time setup on the Mac: `npm run setup-cli`. It downloads the Apps2Samsung CL
   anything else → the TV's browser; plain words → search.
 - Player: OK pause/play, Left/Right 10 s, Back closes; the phone page shows "Now on the TV" with
   the same controls. Status goes TV → phone on the `<topic>-status` channel.
+- YouTube links now open **TizenTube** (ad-free) first, the stock app only if reinstalled, then
+  the browser. To play a specific video ad-free from the phone, pair ReVanced/YouTube with
+  TizenTube via Settings → Link with TV code on the TV.
 - The YouTube hand-off is undocumented by Samsung; if it lands in the browser instead of the app,
   that route did not work on this firmware.

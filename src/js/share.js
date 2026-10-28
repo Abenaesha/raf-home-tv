@@ -36,8 +36,8 @@
     function cfg() {
         var c = window.LAUNCHER_CONFIG.share || {};
         return {
+            tizenTubeAppId: c.tizenTubeAppId || 'xvvl3S1TT1.TizenTubeStandalone',
             youtubeAppId: c.youtubeAppId || '111299001912',
-            dialUrl: c.dialUrl || 'http://127.0.0.1:8080/ws/apps/YouTube',
             handoffWaitMs: c.handoffWaitMs || 5000
         };
     }
@@ -98,7 +98,10 @@
         var url = msg.url || firstUrl(msg.text);
         if (!url) return { kind: 'search', q: (msg.text || '').trim() };
         var yt = youtube(url);
-        if (yt) return { kind: 'youtube', url: url, yt: yt, label: 'Opening in YouTube' };
+        if (yt) {
+            var haveTube = !!Apps.curated(Home.apps(), { apps: [{ match: 'tizentube' }] })[0];
+            return { kind: 'youtube', url: url, yt: yt, label: haveTube ? 'Opening in TizenTube' : 'Opening YouTube' };
+        }
         if (isMedia(url)) return { kind: 'player', url: url, label: 'Playing here' };
         var app = appFor(url);
         if (app) return { kind: 'app', url: url, app: app, label: 'Opening ' + app.label };
@@ -166,26 +169,25 @@
         next();
     }
 
+    // Opens an installed app, passing the watch URL in case the app honours it (TizenTube, being
+    // a standalone, opens to its home and ignores the URL; a launch is still success).
+    function launchWithUrl(appId, url) {
+        var control = new tizen.ApplicationControl('http://tizen.org/appcontrol/operation/view', url);
+        tizen.application.launchAppControl(control, appId, function () {}, function () {
+            // No view handler: fall back to a plain launch of the same app.
+            Apps.launch(appId).catch(function () {});
+        });
+    }
+
     function openYouTube(route, title) {
         var c = cfg();
-        var id = route.yt.id;
-        var body = 'v=' + id + (route.yt.t ? '&t=' + route.yt.t : '');
-        var watch = 'https://www.youtube.com/watch?v=' + id + (route.yt.t ? '&t=' + route.yt.t + 's' : '');
-        attempts([
-            {
-                // The request phones make when casting: DIAL on the TV's own port 8080.
-                name: 'DIAL', run: function () {
-                    fetch(c.dialUrl, { method: 'POST', mode: 'no-cors', body: body }).catch(function () {});
-                }
-            },
-            {
-                name: 'YouTube app', run: function () {
-                    var control = new tizen.ApplicationControl('http://tizen.org/appcontrol/operation/view', watch);
-                    tizen.application.launchAppControl(control, c.youtubeAppId, function () {}, function () {});
-                }
-            },
-            { name: 'browser', run: function () { Search.openUrl(watch); } }
-        ], title, 'youtube');
+        var watch = 'https://www.youtube.com/watch?v=' + route.yt.id + (route.yt.t ? '&t=' + route.yt.t + 's' : '');
+        var tube = Apps.curated(Home.apps(), { apps: [{ id: c.tizenTubeAppId }, { match: 'tizentube' }] })[0];
+        var list = [];
+        if (tube) list.push({ name: 'TizenTube', run: function () { launchWithUrl(tube.id, watch); } });
+        list.push({ name: 'YouTube app', run: function () { launchWithUrl(c.youtubeAppId, watch); } });
+        list.push({ name: 'browser', run: function () { Search.openUrl(watch); } });
+        attempts(list, title, 'youtube');
     }
 
     function receive(msg) {

@@ -1,7 +1,7 @@
 {
   "ok": true,
   "tv": "192.168.1.102",
-  "count": 7,
+  "count": 6,
   "apps": [
     {
       "title": "e-Manual",
@@ -15,13 +15,6 @@
       "appId": "kIciSQlYEM.plex",
       "version": "5.64.1",
       "installDate": "2022-04-01 21:42:06",
-      "removable": true
-    },
-    {
-      "title": "Gallery",
-      "appId": "com.samsung.tv.gallery",
-      "version": "3.0.76",
-      "installDate": "2022-01-27 13:54:48",
       "removable": true
     },
     {
@@ -39,17 +32,21 @@
       "removable": true
     },
     {
+      "title": "TizenTube",
+      "appId": "xvvl3S1TT1.TizenTubeStandalone",
+      "version": "2.1.1",
+      "installDate": "2026-10-28 19:56:44",
+      "removable": true,
+      "catalogApp": "TizenTube",
+      "catalogFile": "TizenTubeCobalt.wgt",
+      "catalogVersion": "2.1.1",
+      "state": "up-to-date"
+    },
+    {
       "title": "Tubi - Free Movies ＆ TV",
       "appId": "3KA0pm7a7V.TubiTV",
       "version": "2.0.30",
       "installDate": "2025-04-24 17:19:08",
-      "removable": true
-    },
-    {
-      "title": "YouTube",
-      "appId": "9Ur5IzDKqV.TizenYouTube",
-      "version": "2.1.513",
-      "installDate": "2022-01-27 13:53:36",
       "removable": true
     }
   ]

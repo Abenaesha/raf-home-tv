@@ -171,6 +171,12 @@
         var items = homeItems();
         if (!items.length) items = Apps.allSorted(state.apps, false).slice(0, 8);
         items.forEach(function (item) { row.appendChild(appTile(item)); });
+        if (window.PhoneBox) {
+            PhoneBox.shortcuts().forEach(function (sc) {
+                row.appendChild(appTile({ kind: 'shortcut', url: sc.url, label: sc.label, brand: findBrand('portal') }));
+            });
+            if (PhoneBox.later().length) row.appendChild(laterTile(PhoneBox.later().length));
+        }
         row.appendChild(allAppsTile());
 
         var row2 = $('inputs-row');
@@ -248,6 +254,19 @@
             log(what + ': FAILED ' + DevLog.errorText(err));
             throw err;
         });
+    }
+
+    // A tile that opens the Watch Later screen, with a count badge.
+    function laterTile(count) {
+        var wrap = el('div', 'app');
+        var tile = el('div', 'tile later-tile');
+        tile.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" ' +
+            'stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/>' +
+            '<path d="M12 7v5l3 2"/></svg><span class="later-badge">' + count + '</span>';
+        wrap.appendChild(tile);
+        wrap.appendChild(el('div', 'label', 'Watch Later'));
+        wrap._item = { kind: 'laterlist' };
+        return wrap;
     }
 
     function launchApp(item) {
@@ -329,6 +348,20 @@
         $('time-main').textContent = t.time;
         $('time-suffix').textContent = t.suffix;
         $('date').textContent = Appearance.date(d);
+        renderWeather();
+    }
+
+    // A small current-temperature glance by the clock, from the same Open-Meteo reading the
+    // screen saver uses. Hidden until there is a reading (and when no coordinates are set).
+    function renderWeather() {
+        var box = $('home-weather');
+        if (!box) return;
+        var w = window.Weather && Weather.current();
+        if (!w) { box.classList.add('hidden'); return; }
+        box.innerHTML = '<span class="hw-icon">' + w.icon + '</span>' +
+            '<span class="hw-temp">' + w.temp + '</span>' +
+            '<span class="hw-detail">' + w.detail + '</span>';
+        box.classList.remove('hidden');
     }
 
     // The TV takes ~4 s to list its ~450 apps, so Home is drawn from the last list we saw
@@ -419,6 +452,8 @@
                 else if (item.kind === 'input') openInput(item);
                 else if (item.kind === 'settings') UI.show('settings');
                 else if (item.kind === 'search') Search.open();
+                else if (item.kind === 'shortcut') Search.openUrl(item.url);
+                else if (item.kind === 'laterlist') UI.show('later');
             },
             // Home is the root: Back does nothing.
             onBack: function () { return true; }
@@ -461,6 +496,13 @@
         Appearance.apply();
         updateClock();
         setInterval(updateClock, 10000);
+        if (window.Weather) {
+            Weather.onUpdate(renderWeather);
+            Weather.refresh();
+        }
+        if (window.PhoneBox) {
+            PhoneBox.onChange(function () { if (UI.isVisible('home')) renderHome(); });
+        }
         renderLab();
         var cached = readCache();
         if (cached && cached.length) setApps(cached);

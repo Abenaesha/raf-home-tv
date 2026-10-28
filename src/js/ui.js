@@ -273,6 +273,12 @@
         document.addEventListener('keydown', onKey);
     }
 
+    // Lets the phone remote (js/phonelink.js) drive Home's navigation by feeding key codes
+    // through the same path as a real remote press. Only affects Raf Home's own screens.
+    function injectKey(code) {
+        onKey({ keyCode: code, preventDefault: function () {} });
+    }
+
     window.UI = {
         KEY: KEY,
         $: $,
@@ -295,6 +301,7 @@
         current: function () { return current; },
         isVisible: function (name) { return current === name; },
         setKeyHook: function (fn) { keyHook = fn; },
-        setColourKey: function (fn) { colourKey = fn; }
+        setColourKey: function (fn) { colourKey = fn; },
+        injectKey: injectKey
     };
 })();

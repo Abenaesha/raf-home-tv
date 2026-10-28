@@ -67,7 +67,7 @@
         if (!raw) return null;
         try {
             var m = JSON.parse(raw);
-            if (m && (m.kind === 'share' || m.kind === 'ctl')) return m;
+            if (m && typeof m.kind === 'string') return m;
             if (m && typeof m.q === 'string') return { q: m.q, e: m.e || null };
         } catch (e) {
             // plain text
@@ -78,8 +78,10 @@
     function usable(msg) {
         if (!msg) return false;
         if (msg.kind === 'share') return !!(msg.url || msg.text);
-        if (msg.kind === 'ctl') return typeof msg.cmd === 'string';
-        return !!msg.q.trim();
+        if (msg.kind === 'ctl' || msg.kind === 'nav') return typeof msg.cmd === 'string';
+        if (msg.kind === 'shortcut') return !!msg.url;
+        if (msg.kind) return false;
+        return !!(msg.q && msg.q.trim());
     }
 
     // Tells the phone page what the TV is doing. Fire and forget: the TV never waits on it.

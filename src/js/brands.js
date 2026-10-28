@@ -27,6 +27,7 @@ window.BRANDS = [
     // Consoles (used by inputs in config.js)
     { key: 'playstation', mark: 'playstation', bg: 'linear-gradient(135deg,#00205c,#0070d1)', fg: '#fff' },
     { key: 'xbox', mark: 'xbox', bg: 'linear-gradient(135deg,#0a3a0a,#16a016)', fg: '#fff' },
+    { key: 'portal', mark: 'globe', bg: 'linear-gradient(135deg,#3a1d6e,#7b3fe4)', fg: '#fff' },
     { key: 'mac', mark: 'mac', bg: 'linear-gradient(135deg,#2b2f36,#5b6270)', fg: '#fff' },
     { key: 'switch', mark: 'nintendoswitch', bg: 'linear-gradient(135deg,#b3000e,#ff2a2a)', fg: '#fff' }
 ];

@@ -26,7 +26,10 @@ window.LAUNCHER_CONFIG = {
         { id: 'com.samsung.tv.aria-video', match: 'apple ?tv', label: 'Apple TV' },
         // Samsung's own Browser. A third-party browser (e.g. Overscan) cannot start its web
         // engine on this firmware without root/partner cert, so the stock one is the only option.
-        { match: ['^org\\.tizen\\.browser$', '^internet$', 'browser'], label: 'Web' }
+        { match: ['^org\\.tizen\\.browser$', '^internet$', 'browser'], label: 'Web' },
+        // TizenPortal (the better browser), reached via TizenBrew. Opens TizenBrew's dashboard;
+        // pick TizenPortal there. Deep-launching the module isn't possible on this firmware.
+        { id: 'xvvl3S1bvH.TizenBrewStandalone', match: 'tizenbrew|tizenportal', label: 'Portal', brand: 'portal' }
     ],
 
     // HDMI inputs shown in the second row. The Mac is assumed on HDMI 1: if it is on another

@@ -15,6 +15,7 @@
     var apps = [
         app('RafHomeTV1.Launcher', 'Raf Home'),
         app('xvvl3S1TT1.TizenTubeStandalone', 'TizenTube'),
+        app('xvvl3S1bvH.TizenBrewStandalone', 'TizenBrew'),
         app('com.samsung.tv.cobalt-yt', 'YouTube'),
         app('org.tizen.netflix-app', 'Netflix'),
         app('org.tizen.primevideo', 'Prime Video'),

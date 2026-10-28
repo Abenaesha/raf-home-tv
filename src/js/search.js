@@ -133,6 +133,29 @@
         return row;
     }
 
+    // Type-to-find: installed apps whose name contains the typed text.
+    function matchingApps() {
+        var q = $('search-input').value.trim().toLowerCase();
+        if (!q || !window.Home || !window.Apps) return [];
+        return Apps.allSorted(Home.apps(), false).filter(function (a) {
+            return a.label.toLowerCase().indexOf(q) >= 0;
+        }).slice(0, 6);
+    }
+
+    function renderApps() {
+        var apps = matchingApps();
+        var box = $('search-apps');
+        box.innerHTML = '';
+        apps.forEach(function (a) {
+            var c = UI.el('div', 'search-app', a.label);
+            c._item = { kind: 'app', id: a.id, label: a.label };
+            box.appendChild(c);
+        });
+        var show = apps.length > 0;
+        $('search-apps-block').classList.toggle('hidden', !show);
+        $('search-recent-block').classList.toggle('hidden', show || !state.recent.length);
+    }
+
     function render() {
         var chips = $('search-engines');
         chips.innerHTML = '';
@@ -143,6 +166,7 @@
         $('search-recent-block').classList.toggle('hidden', !state.recent.length);
         $('search-placeholder-engine').textContent = engine().label;
         renderPhone();
+        renderApps();
     }
 
     // The QR code for the phone page. Drawn once; the topic does not change.
@@ -207,6 +231,10 @@
     function init() {
         load();
         $('search-field')._item = { kind: 'field' };
+        $('search-input').addEventListener('input', function () {
+            renderApps();
+            UI.refreshHints();
+        });
         $('search-input').addEventListener('blur', function () {
             // The TV's keyboard can close itself (its own Done/Back); keep our state in step.
             if (state.typing) {
@@ -219,7 +247,11 @@
             el: $('search'),
             rows: function () {
                 var r = [[$('search-field')], UI.children($('search-engines'))];
-                UI.children($('search-recent-list')).forEach(function (e) { r.push([e]); });
+                if (!$('search-apps-block').classList.contains('hidden')) {
+                    r.push(UI.children($('search-apps')));
+                } else {
+                    UI.children($('search-recent-list')).forEach(function (e) { r.push([e]); });
+                }
                 return r;
             },
             hints: function () {
@@ -244,6 +276,8 @@
                 } else if (item.kind === 'recent') {
                     $('search-input').value = item.text;
                     run(item.text);
+                } else if (item.kind === 'app') {
+                    Apps.launch(item.id).catch(function () { UI.toast('Could not open ' + item.label); });
                 }
             },
             onKey: function (k) {

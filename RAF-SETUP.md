@@ -76,3 +76,15 @@ One-time setup on the Mac: `npm run setup-cli`. It downloads the Apps2Samsung CL
   TizenTube via Settings → Link with TV code on the TV.
 - The YouTube hand-off is undocumented by Samsung; if it lands in the browser instead of the app,
   that route did not work on this firmware.
+
+## Home extras (1.4.0)
+- **Portal tile** on Home → opens TizenBrew (then pick TizenPortal). Added to `config.js` apps.
+- **Weather glance** under the clock (Manchester), from the same Open-Meteo reading as the screensaver.
+- **Watch Later**: from the phone page tap "+ Watch later" on a link; it queues on a Watch Later
+  tile on Home. Open the tile → OK plays an item (and removes it), Yellow removes without opening.
+  Stored in `rafhome.later.v1`.
+- **Pin to Home**: phone page "Pin to Home" on a link adds a shortcut tile to Home
+  (`rafhome.shortcuts.v1`); selecting it opens the site in the browser.
+- **Type-to-find apps**: typing in the search screen surfaces matching installed apps above results.
+- **Phone remote**: the phone page has a d-pad (arrows/OK/Back) that drives Raf Home's own menus
+  (`kind:"nav"` → UI.injectKey). It does not control other apps.

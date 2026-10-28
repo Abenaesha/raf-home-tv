@@ -1455,3 +1455,41 @@ html.preview, html.preview body {
     font-size: 24px;
     color: rgba(255, 255, 255, 0.75);
 }
+
+/* ---------- Weather glance on Home (js/home.js) ---------- */
+.home-weather {
+    display: flex;
+    align-items: center;
+    margin-top: 16px;
+    font-size: 26px;
+    color: var(--muted);
+}
+.home-weather .hw-icon svg { width: 34px; height: 36px; display: block; }
+.home-weather .hw-icon { margin-right: 14px; color: var(--fg); }
+.home-weather .hw-temp { font-size: 30px; font-weight: 600; color: var(--fg); margin-right: 14px; }
+.home-weather .hw-detail { font-size: 22px; }
+
+/* ---------- Watch Later (js/phonebox.js) ---------- */
+.later-tile { display: flex; align-items: center; justify-content: center; position: relative;
+    background: linear-gradient(135deg, #1d4ed8, #0b7a6e); }
+.later-tile svg { width: 76px; height: 76px; }
+.later-badge { position: absolute; top: 18px; right: 22px; min-width: 34px; height: 34px; padding: 0 8px;
+    border-radius: 17px; background: #ff4d4f; color: #fff; font-size: 24px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center; }
+
+.later-list { position: absolute; top: 230px; left: var(--edge); right: var(--edge); list-style: none; margin: 0; padding: 0; }
+.later-item { display: flex; align-items: center; height: 92px; padding: 0 28px; margin: 0 -28px;
+    border-radius: 18px; font-size: 34px; color: #e9ebef; border-bottom: 1px solid rgba(255,255,255,.07); }
+.later-item svg { width: 34px; height: 34px; margin-right: 28px; flex: none; color: var(--muted); }
+.later-item .later-title { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.later-item.focused { background: var(--fg); color: var(--bg); }
+.later-item.focused svg { color: var(--bg); }
+.later-empty { color: var(--muted); font-size: 30px; padding: 24px 0; }
+
+/* ---------- Type-to-find apps in search (js/search.js) ---------- */
+#search-apps-block { top: 500px; }
+.search-apps { display: flex; flex-wrap: wrap; }
+.search-app { margin: 0 18px 18px 0; padding: 18px 30px; border-radius: 16px;
+    border: 3px solid transparent; background: rgba(255,255,255,.08); color: var(--fg);
+    font-size: 30px; font-weight: 600; }
+.search-app.focused { background: var(--fg); color: var(--bg); border-color: #fff; }

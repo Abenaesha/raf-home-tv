@@ -70,6 +70,18 @@
     overflow-wrap: anywhere; color: var(--fg); }
   .copy { margin-top: 6px; padding: 8px 12px; border-radius: 10px; border: 1px solid var(--line); background: var(--card-2); font-size: 13px; }
   .tip { margin-top: 18px; font-size: 13px; color: var(--muted); }
+.actions { display: flex; gap: 10px; margin-top: 12px; }
+  .actions button { flex: 1; padding: 12px; border-radius: 14px; border: 1px solid var(--line);
+    background: var(--card); color: var(--fg); font-size: 15px; font-weight: 600; }
+  .actions button:disabled { opacity: .45; }
+  .remote { margin-top: 18px; }
+  .dpad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; max-width: 280px; margin: 12px auto 0; }
+  .dpad button { height: 56px; border-radius: 14px; border: 0; background: var(--card-2); color: var(--fg);
+    font-size: 20px; font-weight: 700; }
+  .dpad button.main { background: var(--accent); color: var(--accent-fg); }
+  .dpad .up { grid-column: 2; } .dpad .left { grid-column: 1; grid-row: 2; }
+  .dpad .ok { grid-column: 2; grid-row: 2; } .dpad .right { grid-column: 3; grid-row: 2; }
+  .dpad .down { grid-column: 2; grid-row: 3; } .dpad .back { grid-column: 3; grid-row: 3; }
   .install { margin-top: 14px; width: 100%; padding: 12px; border-radius: 14px; border: 1px solid var(--line); background: var(--card); font-weight: 600; }
 </style>
 </head>
@@ -88,6 +100,10 @@
       <button class="send" id="send" type="submit">Send</button>
     </form>
     <div id="status" class="status" role="status"></div>
+    <div class="actions">
+      <button type="button" id="later-btn">+ Watch later</button>
+      <button type="button" id="pin-btn">Pin to Home</button>
+    </div>
 
     <section id="now" class="now" hidden aria-label="Now on the TV">
       <div class="now-head">
@@ -115,6 +131,19 @@
 
     <button id="install" class="install" type="button" hidden>Add TV to this phone's share menu</button>
     <p class="tip">On Android: install this page (Chrome menu, then Add to Home screen) and "TV" appears when you share from any app. Raf Home must be open on the TV.</p>
+
+    <details class="remote">
+      <summary>Remote for Raf Home</summary>
+      <div class="dpad">
+        <button type="button" class="up" data-nav="up" aria-label="Up">▲</button>
+        <button type="button" class="left" data-nav="left" aria-label="Left">◀</button>
+        <button type="button" class="ok main" data-nav="ok">OK</button>
+        <button type="button" class="right" data-nav="right" aria-label="Right">▶</button>
+        <button type="button" class="down" data-nav="down" aria-label="Down">▼</button>
+        <button type="button" class="back" data-nav="back">Back</button>
+      </div>
+      <p class="tip">Drives Raf Home's own menus. Other apps use the TV remote.</p>
+    </details>
 
     <details>
       <summary>Using an iPhone? Set up "Send to TV"</summary>
@@ -264,6 +293,31 @@
   Array.prototype.forEach.call(document.querySelectorAll('[data-cmd]'), function (b) {
     b.onclick = function () {
       post({ kind: 'ctl', cmd: b.getAttribute('data-cmd') }).catch(function () { status('Could not reach the TV.', 'err'); });
+    };
+  });
+
+  // ---------- Watch later, Pin to Home, and the Raf Home remote
+  function linkFrom(text) {
+    text = (text || '').trim();
+    return firstUrl(text) || (looksLikeAddress(text) ? 'https://' + text : '');
+  }
+  $('later-btn').onclick = function () {
+    var url = linkFrom($('q').value);
+    if (!url) { status('Watch later is for links. Paste a video or page link.', 'err'); return; }
+    post({ kind: 'share', url: url, title: '', later: true })
+      .then(function () { status('Saved to Watch Later on the TV.', 'ok'); remember(url); $('q').value = ''; })
+      .catch(function () { status('Could not reach the TV.', 'err'); });
+  };
+  $('pin-btn').onclick = function () {
+    var url = linkFrom($('q').value);
+    if (!url) { status('Pin to Home is for links. Paste a site link.', 'err'); return; }
+    post({ kind: 'shortcut', url: url, title: '' })
+      .then(function () { status('Pinned to Home on the TV.', 'ok'); $('q').value = ''; })
+      .catch(function () { status('Could not reach the TV.', 'err'); });
+  };
+  Array.prototype.forEach.call(document.querySelectorAll('[data-nav]'), function (b) {
+    b.onclick = function () {
+      post({ kind: 'nav', cmd: b.getAttribute('data-nav') }).catch(function () { status('Could not reach the TV.', 'err'); });
     };
   });
 

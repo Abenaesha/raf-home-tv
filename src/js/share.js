@@ -192,6 +192,14 @@
 
     function receive(msg) {
         if (window.Screensaver && Screensaver.close) Screensaver.close();
+        if (msg.later) {
+            var saved = msg.url || firstUrl(msg.text);
+            if (saved && window.PhoneBox) {
+                PhoneBox.addLater(saved, msg.title);
+                UI.toast('Added to Watch Later');
+                return;
+            }
+        }
         var route = decide(msg);
         if (route.kind === 'search') {
             if (route.q) Search.fromPhone({ q: route.q });

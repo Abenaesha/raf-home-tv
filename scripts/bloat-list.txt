@@ -1,0 +1,11 @@
+# App IDs for `npm run debloat` to remove from the TV. One ID per line.
+# Get the real IDs for your TV with:   npm run list-apps
+#
+# Lines starting with # are ignored. Anything after a # on a line is a note.
+# While every line is commented out, debloat removes nothing.
+#
+# Paste the IDs of the apps you want gone below, e.g.:
+#   3201907018807    # Samsung TV Plus
+#   G19servic..      # (whatever list-apps shows)
+#
+# --- your list below ---

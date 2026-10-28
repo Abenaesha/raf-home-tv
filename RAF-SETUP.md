@@ -60,3 +60,16 @@ One-time setup on the Mac: `npm run setup-cli`. It downloads the Apps2Samsung CL
 - One-time setup: GitHub repo → Settings → Pages → Deploy from a branch → `main` / `/docs`.
 - Default engines are now light versions (DuckDuckGo Lite, mobile Wikipedia) for speed.
 - QR codes are drawn with qrcode-generator by Kazuhiko Arase (MIT), in `src/js/vendor/`.
+
+## Send to TV (1.3.0)
+- Share a link from any app on the phone to **TV** (Android: install the phone page via Chrome's
+  Add to Home screen; iPhone: the Shortcut steps on the phone page). Typed or pasted links work too.
+- The TV shows a "From your phone" card, then routes it (`src/js/share.js`):
+  YouTube → the YouTube app (cast-style DIAL hand-off, then the app, then the browser);
+  direct video files (.mp4, .m3u8, .webm…) → Raf Home's player (`src/js/player.js`);
+  Netflix / iPlayer / ITVX / Channel 4 / Prime / Disney+ / Spotify → that app's home screen;
+  anything else → the TV's browser; plain words → search.
+- Player: OK pause/play, Left/Right 10 s, Back closes; the phone page shows "Now on the TV" with
+  the same controls. Status goes TV → phone on the `<topic>-status` channel.
+- The YouTube hand-off is undocumented by Samsung; if it lands in the browser instead of the app,
+  that route did not work on this firmware.

@@ -274,5 +274,8 @@
         });
     }
 
-    window.Search = { init: init, open: function () { UI.show('search'); }, toUrl: toUrl, fromPhone: fromPhone };
+    window.Search = {
+        init: init, open: function () { UI.show('search'); }, toUrl: toUrl, fromPhone: fromPhone,
+        openUrl: openUrl
+    };
 })();

@@ -5,50 +5,78 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#0b0d12">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="TV Search">
+<meta name="apple-mobile-web-app-title" content="TV">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" href="icon-192.png">
 <title>TV Search</title>
 <style>
   :root {
-    --bg: #0b0d12; --card: #161a22; --line: rgba(255,255,255,.08); --fg: #f4f5f7;
+    --bg: #0b0d12; --card: #161a22; --card-2: #1c212c; --line: rgba(255,255,255,.08); --fg: #f4f5f7;
     --muted: rgba(244,245,247,.6); --accent: #f4f5f7; --accent-fg: #0b0d12; --ok: #3ddc84; --err: #ff6b6b;
+    --link: #8ea6ff;
   }
   @media (prefers-color-scheme: light) {
-    :root { --bg: #f4f5f7; --card: #ffffff; --line: rgba(0,0,0,.08); --fg: #0b0d12;
-            --muted: rgba(11,13,18,.6); --accent: #0b0d12; --accent-fg: #ffffff; --ok: #157a3f; --err: #c62828; }
+    :root { --bg: #f4f5f7; --card: #ffffff; --card-2: #eceef2; --line: rgba(0,0,0,.08); --fg: #0b0d12;
+            --muted: rgba(11,13,18,.6); --accent: #0b0d12; --accent-fg: #ffffff; --ok: #157a3f; --err: #c62828;
+            --link: #3b5bdb; }
   }
   * { box-sizing: border-box; }
   html, body { margin: 0; background: var(--bg); color: var(--fg);
     font: 16px/1.4 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
-  main { max-width: 560px; margin: 0 auto; padding: max(20px, env(safe-area-inset-top)) 16px 32px; }
+  main { max-width: 560px; margin: 0 auto;
+    padding: max(20px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) 32px max(16px, env(safe-area-inset-left)); }
   h1 { font-size: 22px; margin: 4px 0 2px; }
   .sub { color: var(--muted); font-size: 14px; margin: 0 0 18px; }
   form { display: flex; }
   input { flex: 1; min-width: 0; font: inherit; font-size: 18px; padding: 16px 18px; border-radius: 16px 0 0 16px;
     border: 1px solid var(--line); border-right: 0; background: var(--card); color: var(--fg); outline: none; }
   input:focus { border-color: var(--muted); }
-  button.send { font: inherit; font-weight: 700; padding: 0 20px; border: 0; border-radius: 0 16px 16px 0;
+  button { font: inherit; color: inherit; cursor: pointer; }
+  button:focus-visible { outline: 2px solid var(--link); outline-offset: 2px; }
+  button.send { font-weight: 700; padding: 0 20px; border: 0; border-radius: 0 16px 16px 0;
     background: var(--accent); color: var(--accent-fg); }
   button.send:disabled { opacity: .5; }
   .label { margin: 22px 0 10px; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
-  .chips { display: flex; flex-wrap: wrap; margin: -4px; }
-  .chip { margin: 4px; padding: 9px 14px; border-radius: 999px; border: 1px solid var(--line);
-    background: var(--card); color: var(--fg); font: inherit; font-size: 15px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip { padding: 9px 14px; border-radius: 999px; border: 1px solid var(--line); background: var(--card); font-size: 15px; }
   .chip.on { background: var(--accent); color: var(--accent-fg); border-color: var(--accent); }
   .status { min-height: 22px; margin-top: 12px; font-size: 14px; color: var(--muted); }
   .status.ok { color: var(--ok); } .status.err { color: var(--err); }
   ul { list-style: none; margin: 0; padding: 0; border-radius: 16px; overflow: hidden; background: var(--card); }
   li { border-top: 1px solid var(--line); }
   li:first-child { border-top: 0; }
-  li button { width: 100%; text-align: left; padding: 14px 16px; border: 0; background: none; color: var(--fg); font: inherit; }
+  li button { width: 100%; text-align: left; padding: 14px 16px; border: 0; background: none;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .empty { color: var(--muted); font-size: 14px; }
-  .tip { margin-top: 26px; font-size: 13px; color: var(--muted); }
   .setup { padding: 18px; border-radius: 16px; background: var(--card); }
+
+  /* Now on TV */
+  .now { margin-top: 18px; padding: 16px; border-radius: 18px; background: var(--card); display: grid; gap: 12px; }
+  .now-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+  .now-title { font-weight: 700; font-size: 16px; overflow-wrap: anywhere; }
+  .now-sub { color: var(--muted); font-size: 13px; }
+  .bar { height: 5px; border-radius: 3px; background: var(--card-2); overflow: hidden; }
+  .bar i { display: block; height: 100%; width: 0; background: var(--fg); }
+  .ctrls { display: grid; grid-template-columns: 1fr 1.4fr 1fr 1fr; gap: 8px; }
+  .ctrls button { height: 48px; border-radius: 14px; border: 0; background: var(--card-2); font-weight: 700; }
+  .ctrls button.main { background: var(--accent); color: var(--accent-fg); }
+
+  details { margin-top: 26px; border-radius: 16px; background: var(--card); padding: 14px 16px; }
+  summary { font-weight: 600; cursor: pointer; }
+  details ol { padding-left: 20px; color: var(--muted); font-size: 14px; }
+  details li { border: 0; margin: 6px 0; }
+  code { font: 13px ui-monospace, Menlo, monospace; background: var(--card-2); padding: 2px 6px; border-radius: 6px;
+    overflow-wrap: anywhere; color: var(--fg); }
+  .copy { margin-top: 6px; padding: 8px 12px; border-radius: 10px; border: 1px solid var(--line); background: var(--card-2); font-size: 13px; }
+  .tip { margin-top: 18px; font-size: 13px; color: var(--muted); }
+  .install { margin-top: 14px; width: 100%; padding: 12px; border-radius: 14px; border: 1px solid var(--line); background: var(--card); font-weight: 600; }
 </style>
 </head>
 <body>
 <main>
   <h1>TV Search</h1>
-  <p class="sub">Type or tap your keyboard's mic. It opens on the TV, nothing is mirrored.</p>
+  <p class="sub">Search, or share links here from any app. They open on the TV; nothing is mirrored and your phone stays free.</p>
 
   <div id="setup" class="setup" hidden>
     Open the search screen on the TV (Raf Home, press Up then OK) and scan its QR code with your phone's camera.
@@ -56,10 +84,28 @@
 
   <div id="app" hidden>
     <form id="form" autocomplete="off">
-      <input id="q" type="search" enterkeyhint="send" placeholder="Search or paste a link" aria-label="Search">
+      <input id="q" type="search" enterkeyhint="send" placeholder="Search or paste a link" aria-label="Search or link">
       <button class="send" id="send" type="submit">Send</button>
     </form>
     <div id="status" class="status" role="status"></div>
+
+    <section id="now" class="now" hidden aria-label="Now on the TV">
+      <div class="now-head">
+        <div class="label" style="margin:0">Now on the TV</div>
+        <div id="now-state" class="now-sub"></div>
+      </div>
+      <div id="now-title" class="now-title"></div>
+      <div id="now-via" class="now-sub"></div>
+      <div id="now-player" hidden>
+        <div class="bar"><i id="now-bar"></i></div>
+        <div class="ctrls" style="margin-top:12px">
+          <button type="button" data-cmd="back10" aria-label="Back 10 seconds">−10 s</button>
+          <button type="button" data-cmd="toggle" class="main" id="toggle">Pause</button>
+          <button type="button" data-cmd="fwd10" aria-label="Forward 10 seconds">+10 s</button>
+          <button type="button" data-cmd="stop">Stop</button>
+        </div>
+      </div>
+    </section>
 
     <div class="label">Search with</div>
     <div id="engines" class="chips"></div>
@@ -67,7 +113,21 @@
     <div class="label">Recent</div>
     <ul id="recent"></ul>
 
-    <p class="tip">Tip: add this page to your home screen for one-tap access. Raf Home must be open on the TV.</p>
+    <button id="install" class="install" type="button" hidden>Add TV to this phone's share menu</button>
+    <p class="tip">On Android: install this page (Chrome menu, then Add to Home screen) and "TV" appears when you share from any app. Raf Home must be open on the TV.</p>
+
+    <details>
+      <summary>Using an iPhone? Set up "Send to TV"</summary>
+      <ol>
+        <li>Open <b>Shortcuts</b>, tap <b>+</b>, name it <b>Send to TV</b>.</li>
+        <li>Tap the <b>i</b> (details) and turn on <b>Show in Share Sheet</b>; accept <b>URLs</b> and <b>Text</b>.</li>
+        <li>Add <b>Get Contents of URL</b>. URL: <code id="ios-url"></code>
+          <br><button class="copy" type="button" id="copy-url">Copy URL</button></li>
+        <li>Set <b>Method</b> to POST and <b>Request Body</b> to JSON with two Text fields: <code>kind</code> = <code>share</code>, and <code>url</code> = <b>Shortcut Input</b>.</li>
+        <li>Optional: add <b>Show Notification</b> "Sent to TV".</li>
+      </ol>
+      Then share from Safari, YouTube or anywhere and pick <b>Send to TV</b>.
+    </details>
   </div>
 </main>
 <script>
@@ -79,6 +139,7 @@
     { key: 'ddg', label: 'DuckDuckGo' }, { key: 'google', label: 'Google' },
     { key: 'youtube', label: 'YouTube' }, { key: 'wikipedia', label: 'Wikipedia' }, { key: 'bbc', label: 'BBC' }
   ];
+  var VIA = { player: 'Playing in Raf Home', youtube: 'In the YouTube app', app: 'In the app', browser: 'In the TV browser', web: 'In the TV browser' };
   var $ = function (id) { return document.getElementById(id); };
 
   var store = {};
@@ -92,13 +153,27 @@
   store.engine = store.engine || 'ddg';
   store.recent = store.recent || [];
 
+  if ('serviceWorker' in navigator) { navigator.serviceWorker.register('sw.js').catch(function () {}); }
+
   if (!topic) { $('setup').hidden = false; return; }
   $('app').hidden = false;
+  $('ios-url').textContent = RELAY + '/' + topic;
 
   function status(text, kind) {
     var el = $('status');
     el.textContent = text;
     el.className = 'status' + (kind ? ' ' + kind : '');
+  }
+
+  function firstUrl(text) {
+    var m = /https?:\/\/[^\s<>"']+/i.exec(text || '');
+    return m ? m[0].replace(/[).,;!?]+$/, '') : '';
+  }
+  function looksLikeAddress(text) { return !/\s/.test(text) && /^[\w-]+(\.[\w-]+)+(\/\S*)?$/.test(text); }
+
+  function post(body) {
+    return fetch(RELAY + '/' + topic, { method: 'POST', body: JSON.stringify(body) })
+      .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r; });
   }
 
   function renderEngines() {
@@ -109,7 +184,7 @@
       b.type = 'button';
       b.className = 'chip' + (e.key === store.engine ? ' on' : '');
       b.textContent = e.label;
-      b.onclick = function () { store.engine = e.key; save(); renderEngines(); $('q').focus(); };
+      b.onclick = function () { store.engine = e.key; save(); renderEngines(); };
       box.appendChild(b);
     });
   }
@@ -118,9 +193,7 @@
     var list = $('recent');
     list.innerHTML = '';
     if (!store.recent.length) {
-      var li = document.createElement('li');
-      li.innerHTML = '<button type="button" class="empty" disabled>Your searches will show here</button>';
-      list.appendChild(li);
+      list.innerHTML = '<li><button type="button" class="empty" disabled>Your searches and links will show here</button></li>';
       return;
     }
     store.recent.forEach(function (r) {
@@ -140,17 +213,19 @@
     renderRecent();
   }
 
-  function send(q) {
-    q = (q || '').trim();
-    if (!q) { $('q').focus(); return; }
+  // Links go to the TV as a share (YouTube opens in its app, videos play in Raf Home);
+  // anything else is a search with the chosen engine.
+  function send(text, title) {
+    text = (text || '').trim();
+    if (!text) { $('q').focus(); return; }
+    var url = firstUrl(text) || (looksLikeAddress(text) ? 'https://' + text : '');
+    var body = url ? { kind: 'share', url: url, title: title || '' } : { q: text, e: store.engine };
     $('send').disabled = true;
     status('Sending to the TV…');
-    // A plain-text body keeps this a "simple" request, so the browser sends no CORS preflight.
-    fetch(RELAY + '/' + topic, { method: 'POST', body: JSON.stringify({ q: q, e: store.engine }) })
-      .then(function (r) {
-        if (!r.ok) throw new Error('HTTP ' + r.status);
-        status('Sent. Look at the TV.', 'ok');
-        remember(q);
+    post(body)
+      .then(function () {
+        status(url ? 'Sent. Watch the TV.' : 'Search sent. Watch the TV.', 'ok');
+        remember(url || text);
         $('q').value = '';
       })
       .catch(function () { status('Could not reach the relay. Check your connection and try again.', 'err'); })
@@ -158,9 +233,71 @@
   }
 
   $('form').onsubmit = function (ev) { ev.preventDefault(); send($('q').value); };
+
+  // ---------- Now on the TV (status the TV publishes on "<topic>-status")
+  var now = {};
+  function fmt(s) { s = Math.max(0, Math.floor(s || 0)); var m = Math.floor(s / 60); return m + ':' + ('0' + (s % 60)).slice(-2); }
+  function renderNow() {
+    if (!now.title || now.state === 'stopped' || now.state === 'error') { $('now').hidden = true; return; }
+    $('now').hidden = false;
+    $('now-title').textContent = now.title;
+    $('now-via').textContent = VIA[now.via] || '';
+    var isPlayer = now.via === 'player';
+    $('now-player').hidden = !isPlayer;
+    $('now-state').textContent = now.state === 'arriving' ? 'Opening…' : isPlayer ? (now.state === 'paused' ? 'Paused' : 'Playing') + (now.dur ? ' · ' + fmt(now.at) + ' / ' + fmt(now.dur) : '') : '';
+    $('toggle').textContent = now.state === 'paused' ? 'Play' : 'Pause';
+    $('now-bar').style.width = now.dur ? Math.min(100, 100 * now.at / now.dur) + '%' : '0';
+  }
+  function listen() {
+    if (typeof EventSource === 'undefined') return;
+    var es = new EventSource(RELAY + '/' + topic + '-status/sse');
+    es.onmessage = function (ev) {
+      try {
+        var d = JSON.parse(ev.data);
+        if (d.event !== 'message') return;
+        var s = JSON.parse(d.message);
+        now = s;
+        renderNow();
+      } catch (e) {}
+    };
+  }
+  Array.prototype.forEach.call(document.querySelectorAll('[data-cmd]'), function (b) {
+    b.onclick = function () {
+      post({ kind: 'ctl', cmd: b.getAttribute('data-cmd') }).catch(function () { status('Could not reach the TV.', 'err'); });
+    };
+  });
+
+  // ---------- iPhone copy button
+  $('copy-url').onclick = function () {
+    var text = $('ios-url').textContent;
+    var done = function () { $('copy-url').textContent = 'Copied'; };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done, function () { window.getSelection().selectAllChildren($('ios-url')); });
+    } else { window.getSelection().selectAllChildren($('ios-url')); }
+  };
+
+  // ---------- Android install prompt, when Chrome offers it
+  var deferred = null;
+  window.addEventListener('beforeinstallprompt', function (e) { e.preventDefault(); deferred = e; $('install').hidden = false; });
+  $('install').onclick = function () {
+    if (!deferred) return;
+    deferred.prompt();
+    deferred.userChoice.then(function () { deferred = null; $('install').hidden = true; });
+  };
+
   renderEngines();
   renderRecent();
-  $('q').focus();
+  listen();
+
+  // ---------- Shared from another app (Android share menu): send straight away
+  var params = new URLSearchParams(location.search);
+  var shared = params.get('url') || params.get('text') || '';
+  if (shared) {
+    history.replaceState(null, '', location.pathname);
+    send(shared, params.get('title') || '');
+  } else {
+    $('q').focus();
+  }
 })();
 </script>
 </body>

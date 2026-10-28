@@ -10,8 +10,12 @@
  * Only someone who knows the topic can send to this TV, and all they can do is open a search or
  * a web page here. Searches pass through the relay; nothing else does.
  *
- * Messages are JSON {"q": "text", "e": "engineKey"} from the phone page, or plain text (e.g. from
- * the ntfy app), which is treated as {"q": text}.
+ * Messages, phone to TV (JSON; plain text from e.g. the ntfy app counts as a search):
+ *   {"q": "words", "e": "engineKey"}          search
+ *   {"kind": "share", "url": "...", "title"}  something shared from the phone (js/share.js)
+ *   {"kind": "ctl", "cmd": "toggle"}          player control: toggle | back10 | fwd10 | stop
+ * Status, TV to phone, on "<topic>-status" (see publish):
+ *   {"state": "playing", "via": "player", "title": "...", "at": 12, "dur": 300}
  *
  * Listens only while Raf Home is running: on a Tizen TV a web app is paused in the background.
  *
@@ -63,11 +67,31 @@
         if (!raw) return null;
         try {
             var m = JSON.parse(raw);
+            if (m && (m.kind === 'share' || m.kind === 'ctl')) return m;
             if (m && typeof m.q === 'string') return { q: m.q, e: m.e || null };
         } catch (e) {
             // plain text
         }
         return { q: String(raw), e: null };
+    }
+
+    function usable(msg) {
+        if (!msg) return false;
+        if (msg.kind === 'share') return !!(msg.url || msg.text);
+        if (msg.kind === 'ctl') return typeof msg.cmd === 'string';
+        return !!msg.q.trim();
+    }
+
+    // Tells the phone page what the TV is doing. Fire and forget: the TV never waits on it.
+    function publish(status) {
+        if (!topic || typeof fetch === 'undefined') return;
+        status.time = Math.floor(Date.now() / 1000);
+        try {
+            fetch(cfg().relay + '/' + topic + '-status', { method: 'POST', body: JSON.stringify(status) })
+                .catch(function () {});
+        } catch (e) {
+            // offline: the phone simply shows no status
+        }
     }
 
     function onEvent(ev) {
@@ -78,7 +102,7 @@
         // Ignore anything older than two minutes (a relay replaying history after a reconnect).
         if (data.time && Date.now() / 1000 - data.time > 120) return;
         var msg = parse(data.message);
-        if (msg && msg.q.trim() && handler) handler(msg);
+        if (usable(msg) && handler) handler(msg);
     }
 
     function connect() {
@@ -122,5 +146,8 @@
         });
     }
 
-    window.PhoneLink = { start: start, qrSvg: qrSvg, pageUrl: pageUrl, topic: function () { return topic; } };
+    window.PhoneLink = {
+        start: start, qrSvg: qrSvg, pageUrl: pageUrl, publish: publish,
+        topic: function () { return topic; }
+    };
 })();

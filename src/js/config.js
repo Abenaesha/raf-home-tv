@@ -61,6 +61,17 @@ window.LAUNCHER_CONFIG = {
         page: 'https://abenaesha.github.io/raf-home-tv/phone/'
     },
 
+    /*
+     * Send to TV (js/share.js). YouTube links go to the YouTube app: `youtubeAppId` is its id on
+     * Samsung TVs, `dialUrl` the TV's own casting endpoint. `handoffWaitMs` is how long to wait
+     * for one route to open before trying the next.
+     */
+    share: {
+        youtubeAppId: '111299001912',
+        dialUrl: 'http://127.0.0.1:8080/ws/apps/YouTube',
+        handoffWaitMs: 5000
+    },
+
     // How an input tile switches the TV: 'switch+viewer' (default), 'switch' or 'inapp'.
     inputMethod: 'switch+viewer',
 

@@ -195,6 +195,17 @@
 
     // ---------- typing
 
+    // One guarded submit path: the on-screen keyboard's Done reaches us as a form submit or a
+    // change event on some TVs rather than an Enter keydown, so several listeners point here and
+    // the state.typing guard makes it fire once. Navigating away (Down) clears typing first, so a
+    // blur-triggered change does not search by accident.
+    function submitSearch() {
+        if (!state.typing) return;
+        var value = $('search-input').value;
+        stopTyping();
+        run(value);
+    }
+
     function startTyping() {
         state.typing = true;
         UI.focusOn($('search-field'));
@@ -234,6 +245,14 @@
         $('search-input').addEventListener('input', function () {
             renderApps();
             UI.refreshHints();
+        });
+        $('search-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+            submitSearch();
+        });
+        // Tizen's on-screen keyboard fires 'change' on Done rather than an Enter keydown.
+        $('search-input').addEventListener('change', function () {
+            if ($('search-input').value.trim()) submitSearch();
         });
         $('search-input').addEventListener('blur', function () {
             // The TV's keyboard can close itself (its own Done/Back); keep our state in step.
@@ -283,8 +302,7 @@
             onKey: function (k) {
                 if (state.typing) {
                     if (k === KEY.ENTER || k === IME_DONE) {
-                        stopTyping();
-                        run($('search-input').value);
+                        submitSearch();
                         return true;
                     }
                     if (k === IME_CANCEL || k === KEY.BACK || k === KEY.ESC || k === KEY.DOWN) {

@@ -24,8 +24,9 @@ window.LAUNCHER_CONFIG = {
         { match: 'disney', label: 'Disney+' },
         { match: 'spotify', label: 'Spotify' },
         { id: 'com.samsung.tv.aria-video', match: 'apple ?tv', label: 'Apple TV' },
-        // Overscan (desktop-style browser) if it is installed, otherwise Samsung's Internet app.
-        { match: ['overscan', '^org\\.tizen\\.browser$', '^internet$'], label: 'Web' }
+        // Samsung's own Browser. A third-party browser (e.g. Overscan) cannot start its web
+        // engine on this firmware without root/partner cert, so the stock one is the only option.
+        { match: ['^org\\.tizen\\.browser$', '^internet$', 'browser'], label: 'Web' }
     ],
 
     // HDMI inputs shown in the second row. The Mac is assumed on HDMI 1: if it is on another

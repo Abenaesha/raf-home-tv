@@ -11,6 +11,7 @@
     "fetch-assets": "node scripts/fetch-assets.mjs",
     "release": "sh scripts/build.sh && cp dist/arn0-launcher.wgt release/raf-home.wgt",
     "deploy": "sh scripts/deploy.sh",
-    "setup-cli": "sh scripts/setup-cli.sh"
+    "setup-cli": "sh scripts/setup-cli.sh",
+    "tv-report": "sh scripts/tv-report.sh"
   }
 }

@@ -1,0 +1,56 @@
+{
+  "ok": true,
+  "tv": "192.168.1.102",
+  "count": 7,
+  "apps": [
+    {
+      "title": "e-Manual",
+      "appId": "LzU5yAFXeg.emanual",
+      "version": "8.0.0",
+      "installDate": "2022-01-27 13:52:04",
+      "removable": true
+    },
+    {
+      "title": "Plex",
+      "appId": "kIciSQlYEM.plex",
+      "version": "5.64.1",
+      "installDate": "2022-04-01 21:42:06",
+      "removable": true
+    },
+    {
+      "title": "Gallery",
+      "appId": "com.samsung.tv.gallery",
+      "version": "3.0.76",
+      "installDate": "2022-01-27 13:54:48",
+      "removable": true
+    },
+    {
+      "title": "Browser",
+      "appId": "org.tizen.browser",
+      "version": "4.5.08040",
+      "installDate": "2022-01-27 13:53:21",
+      "removable": true
+    },
+    {
+      "title": "Raf Home",
+      "appId": "RafHomeTV1.Launcher",
+      "version": "1.3.0",
+      "installDate": "2026-10-28 19:28:06",
+      "removable": true
+    },
+    {
+      "title": "Tubi - Free Movies ＆ TV",
+      "appId": "3KA0pm7a7V.TubiTV",
+      "version": "2.0.30",
+      "installDate": "2025-04-24 17:19:08",
+      "removable": true
+    },
+    {
+      "title": "YouTube",
+      "appId": "9Ur5IzDKqV.TizenYouTube",
+      "version": "2.1.513",
+      "installDate": "2022-01-27 13:53:36",
+      "removable": true
+    }
+  ]
+}

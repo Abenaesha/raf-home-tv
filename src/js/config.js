@@ -41,13 +41,24 @@ window.LAUNCHER_CONFIG = {
      * the search words appended.
      */
     search: {
+        // Light versions first: the TV's browser is slow on heavy pages.
         engines: [
+            { key: 'ddg', label: 'DuckDuckGo', url: 'https://lite.duckduckgo.com/lite/?q=' },
             { key: 'google', label: 'Google', url: 'https://www.google.com/search?q=' },
-            { key: 'ddg', label: 'DuckDuckGo', url: 'https://duckduckgo.com/?q=' },
             { key: 'youtube', label: 'YouTube', url: 'https://www.youtube.com/results?search_query=' },
-            { key: 'wikipedia', label: 'Wikipedia', url: 'https://en.wikipedia.org/w/index.php?search=' },
+            { key: 'wikipedia', label: 'Wikipedia', url: 'https://en.m.wikipedia.org/w/index.php?search=' },
             { key: 'bbc', label: 'BBC', url: 'https://www.bbc.co.uk/search?q=' }
         ]
+    },
+
+    /*
+     * Search from your phone (js/phonelink.js). `page` is the phone page, served by GitHub Pages
+     * from docs/phone/; the TV adds its private channel name after a #. `relay` passes messages
+     * from the phone to the TV.
+     */
+    phone: {
+        relay: 'https://ntfy.sh',
+        page: 'https://abenaesha.github.io/raf-home-tv/phone/'
     },
 
     // How an input tile switches the TV: 'switch+viewer' (default), 'switch' or 'inapp'.

@@ -17,11 +17,12 @@
     var STORE = 'rafhome.search.v1';
     var MAX_RECENT = 5;
 
+    // Light versions first: the TV's browser (Chromium 76) is slow on heavy pages.
     var DEFAULT_ENGINES = [
+        { key: 'ddg', label: 'DuckDuckGo', url: 'https://lite.duckduckgo.com/lite/?q=' },
         { key: 'google', label: 'Google', url: 'https://www.google.com/search?q=' },
-        { key: 'ddg', label: 'DuckDuckGo', url: 'https://duckduckgo.com/?q=' },
         { key: 'youtube', label: 'YouTube', url: 'https://www.youtube.com/results?search_query=' },
-        { key: 'wikipedia', label: 'Wikipedia', url: 'https://en.wikipedia.org/w/index.php?search=' },
+        { key: 'wikipedia', label: 'Wikipedia', url: 'https://en.m.wikipedia.org/w/index.php?search=' },
         { key: 'bbc', label: 'BBC', url: 'https://www.bbc.co.uk/search?q=' }
     ];
 
@@ -141,6 +142,31 @@
         state.recent.forEach(function (r) { list.appendChild(recentRow(r)); });
         $('search-recent-block').classList.toggle('hidden', !state.recent.length);
         $('search-placeholder-engine').textContent = engine().label;
+        renderPhone();
+    }
+
+    // The QR code for the phone page. Drawn once; the topic does not change.
+    function renderPhone() {
+        var box = $('search-phone-qr');
+        if (box.firstChild || !window.PhoneLink) return;
+        var svg = PhoneLink.qrSvg();
+        if (svg) box.innerHTML = svg;
+        else $('search-phone').classList.add('hidden');
+    }
+
+    // A search sent from the phone page: show it on the search screen, then run it.
+    function fromPhone(msg) {
+        if (window.Screensaver && Screensaver.close) Screensaver.close();
+        if (msg.e && engines().some(function (e) { return e.key === msg.e; })) {
+            state.engine = msg.e;
+            save();
+        }
+        if (!UI.isVisible('search')) UI.show('search', { fromPhone: true });
+        if (state.typing) stopTyping();
+        render();
+        $('search-input').value = msg.q;
+        UI.toast('From your phone: ' + msg.q);
+        setTimeout(function () { run(msg.q); }, 700);
     }
 
     // ---------- typing
@@ -202,7 +228,8 @@
             },
             onShow: function (opts) {
                 render();
-                if (!opts.back) {
+                // From the phone the query arrives on its own: no keyboard on the TV.
+                if (!opts.back && !opts.fromPhone) {
                     $('search-input').value = '';
                     startTyping();
                 }
@@ -247,5 +274,5 @@
         });
     }
 
-    window.Search = { init: init, open: function () { UI.show('search'); }, toUrl: toUrl };
+    window.Search = { init: init, open: function () { UI.show('search'); }, toUrl: toUrl, fromPhone: fromPhone };
 })();

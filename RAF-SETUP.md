@@ -49,3 +49,14 @@ One-time setup on the Mac: `npm run setup-cli`. It downloads the Apps2Samsung CL
 - `npm run release`: build and copy the package into `release/`.
 - TV address: 192.168.1.102 by default; override with `RAF_TV_IP=...`. Reserving that address for
   the TV in your router stops it from changing.
+
+## Search from your phone (1.2.0)
+- The TV's search screen shows a QR code. Scan it with your phone's camera to open the phone page
+  (`docs/phone/index.html`, served by GitHub Pages). Type or use the keyboard's mic, tap Send, and
+  the search runs on the TV. Nothing is mirrored. Pasted links open directly.
+- Messages travel through the ntfy.sh relay on a random private channel the TV creates on first
+  run (stored on the TV under `rafhome.phone.v1`). Only searches pass through it.
+- Raf Home must be open on the TV to receive them.
+- One-time setup: GitHub repo → Settings → Pages → Deploy from a branch → `main` / `/docs`.
+- Default engines are now light versions (DuckDuckGo Lite, mobile Wikipedia) for speed.
+- QR codes are drawn with qrcode-generator by Kazuhiko Arase (MIT), in `src/js/vendor/`.

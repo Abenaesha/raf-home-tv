@@ -1208,3 +1208,42 @@ html.preview, html.preview body {
 #toast {
     z-index: 10;
 }
+
+/* Search screen: phone QR card on the right; recent searches stop short of it. */
+#search-recent-block { right: 640px; }
+
+.search-phone {
+    position: absolute;
+    top: 300px;
+    right: var(--edge);
+    width: 440px;
+    box-sizing: border-box;
+    padding: 36px;
+    border-radius: 28px;
+    background: rgba(255, 255, 255, 0.07);
+    text-align: center;
+}
+
+.search-phone-qr {
+    width: 300px;
+    height: 300px;
+    margin: 0 auto 26px;
+    border-radius: 16px;
+    background: #fff;
+    overflow: hidden;
+}
+
+.search-phone-qr svg { display: block; width: 300px; height: 300px; }
+
+.search-phone-title {
+    font-size: 30px;
+    font-weight: 700;
+    color: var(--fg);
+}
+
+.search-phone-text {
+    margin-top: 12px;
+    font-size: 22px;
+    line-height: 1.4;
+    color: var(--muted);
+}

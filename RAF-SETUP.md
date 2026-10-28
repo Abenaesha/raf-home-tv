@@ -26,3 +26,11 @@ A mismatch forces an uninstall, which clears the launcher's saved settings.
 ## Edit and preview
     npm run preview   # http://localhost:8080, arrow keys + Enter, Esc = Back
     npm run build     # -> dist/arn0-launcher.wgt
+
+## Search (1.1.0)
+- A phone-style search bar sits beside the clock. Press Up from the apps row, then OK.
+- Type with the remote's keyboard, the SmartThings phone app (its keyboard mic lets you dictate)
+  or a Bluetooth keyboard. OK searches; Down picks the engine (Google, DuckDuckGo, YouTube,
+  Wikipedia, BBC). Typing an address like `bbc.co.uk/sport` opens it directly.
+- Results open in the TV's browser. Engines are editable in `src/js/config.js` (`search.engines`).
+- Recent searches and the chosen engine are stored on the TV (`rafhome.search.v1`).

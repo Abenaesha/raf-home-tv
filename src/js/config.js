@@ -35,6 +35,21 @@ window.LAUNCHER_CONFIG = {
         { hdmi: 1, label: 'Mac', brand: 'mac' }
     ],
 
+    /*
+     * Web search from the bar on Home. Results open in the TV's browser. The first engine is the
+     * default until you pick another on the search screen (the TV remembers it). Each `url` gets
+     * the search words appended.
+     */
+    search: {
+        engines: [
+            { key: 'google', label: 'Google', url: 'https://www.google.com/search?q=' },
+            { key: 'ddg', label: 'DuckDuckGo', url: 'https://duckduckgo.com/?q=' },
+            { key: 'youtube', label: 'YouTube', url: 'https://www.youtube.com/results?search_query=' },
+            { key: 'wikipedia', label: 'Wikipedia', url: 'https://en.wikipedia.org/w/index.php?search=' },
+            { key: 'bbc', label: 'BBC', url: 'https://www.bbc.co.uk/search?q=' }
+        ]
+    },
+
     // How an input tile switches the TV: 'switch+viewer' (default), 'switch' or 'inapp'.
     inputMethod: 'switch+viewer',
 

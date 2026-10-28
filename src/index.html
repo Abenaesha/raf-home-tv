@@ -15,6 +15,11 @@
                 <div id="time"><span id="time-main"></span><span id="time-suffix"></span></div>
                 <div id="date"></div>
             </header>
+            <div id="search-bar" class="search-bar">
+                <span class="search-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.6-3.6"/></svg></span>
+                <span class="search-bar-text">Search or type a web address</span>
+                <span class="search-bar-mic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></span>
+            </div>
             <div id="gear" class="gear">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
                     <circle cx="12" cy="12" r="3.2"/>
@@ -29,6 +34,24 @@
                 <h2>Inputs</h2>
                 <div class="row-viewport"><div id="inputs-row" class="row-track"></div></div>
             </div>
+        </section>
+
+        <section id="search" class="view hidden">
+            <div id="search-field" class="search-field">
+                <span class="search-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.6-3.6"/></svg></span>
+                <input id="search-input" type="text" autocomplete="off" spellcheck="false"
+                       placeholder="Search or type a web address">
+                <span class="search-field-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg><span>Dictate from your phone</span></span>
+            </div>
+            <div id="search-engines-block" class="search-block">
+                <h2>Search with</h2>
+                <div id="search-engines" class="search-engines"></div>
+            </div>
+            <div id="search-recent-block" class="search-block">
+                <h2>Recent</h2>
+                <div id="search-recent-list" class="search-recent-list"></div>
+            </div>
+            <div class="search-note">Results open in the TV's browser · <span id="search-placeholder-engine"></span></div>
         </section>
 
         <section id="all" class="view page hidden">
@@ -177,6 +200,7 @@
     <script src="js/render-probe.js"></script>
     <script src="js/platform-probe.js"></script>
     <script src="js/screensaver.js"></script>
+    <script src="js/search.js"></script>
     <script src="js/home.js"></script>
     <script src="js/settings.js"></script>
     <script src="js/boot.js"></script>

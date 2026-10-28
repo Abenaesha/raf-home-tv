@@ -109,7 +109,7 @@ h1, h2 {
 
 .clock {
     position: absolute;
-    top: 88px;
+    top: 64px;
     left: var(--edge);
 }
 
@@ -146,8 +146,8 @@ h1, h2 {
     right: 0;
 }
 
-#apps-section { top: 350px; }
-#inputs-section { top: 690px; }
+#apps-section { top: 370px; }
+#inputs-section { top: 695px; }
 
 .shelf h2 {
     margin-bottom: 26px;
@@ -1026,4 +1026,185 @@ html.preview, html.preview body {
     background: #000;
     opacity: 0;
     transition: opacity 10000ms linear;
+}
+
+
+/* ---------- Search (Raf Home). Tizen 6.0 / Chromium 76: no flex gap, no inset. ---------- */
+
+.search-icon svg,
+.search-bar-mic svg,
+.search-field-hint svg {
+    display: block;
+}
+
+/* The bar on Home, beside the clock: phone-style. Focus swaps colours, nothing animates but that. */
+.search-bar {
+    position: absolute;
+    top: 120px;
+    left: 700px;
+    right: 220px;
+    height: 96px;
+    box-sizing: border-box;
+    padding: 0 40px;
+    display: flex;
+    align-items: center;
+    border-radius: 48px;
+    border: 2px solid rgba(255, 255, 255, 0.16);
+    background: rgba(255, 255, 255, 0.1);
+    color: rgba(244, 245, 247, 0.72);
+    font-size: 34px;
+    font-weight: 500;
+}
+
+.search-bar .search-icon svg { width: 40px; height: 40px; }
+.search-bar .search-icon { margin-right: 22px; }
+
+.search-bar-text {
+    flex: 1;
+    min-width: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.search-bar-mic svg { width: 32px; height: 32px; opacity: 0.6; }
+
+.search-bar.focused {
+    background: var(--fg);
+    border-color: #fff;
+    color: var(--bg);
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+}
+
+/* The search screen */
+#search {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1920px;
+    height: 1080px;
+    background: radial-gradient(1200px 700px at 20% 0%, #16203a, #07090e 70%);
+    z-index: 5;
+}
+
+.search-field {
+    position: absolute;
+    top: 110px;
+    left: var(--edge);
+    right: var(--edge);
+    height: 120px;
+    box-sizing: border-box;
+    padding: 0 44px;
+    display: flex;
+    align-items: center;
+    border-radius: 60px;
+    border: 3px solid transparent;
+    background: rgba(255, 255, 255, 0.12);
+    color: rgba(244, 245, 247, 0.75);
+}
+
+.search-field.focused {
+    background: var(--fg);
+    border-color: #fff;
+    color: var(--bg);
+}
+
+.search-field .search-icon { margin-right: 26px; }
+.search-field .search-icon svg { width: 46px; height: 46px; }
+
+#search-input {
+    flex: 1;
+    min-width: 0;
+    border: 0;
+    outline: none;
+    background: transparent;
+    color: inherit;
+    font: 500 48px var(--font);
+}
+
+#search-input::placeholder { color: inherit; opacity: 0.55; }
+
+.search-field-hint {
+    display: flex;
+    align-items: center;
+    margin-left: 24px;
+    font-size: 24px;
+    opacity: 0.55;
+    white-space: nowrap;
+}
+
+.search-field-hint svg { width: 30px; height: 30px; margin-right: 10px; }
+
+.search-block {
+    position: absolute;
+    left: var(--edge);
+    right: var(--edge);
+}
+
+#search-engines-block { top: 300px; }
+#search-recent-block { top: 500px; }
+
+.search-block h2 {
+    margin: 0 0 24px;
+    font-size: 24px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+}
+
+.search-engines { display: flex; }
+
+.search-chip {
+    flex: none;
+    margin-right: 22px;
+    padding: 18px 36px;
+    border-radius: 40px;
+    border: 3px solid transparent;
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--fg);
+    font-size: 30px;
+    font-weight: 600;
+}
+
+.search-chip.on {
+    background: rgba(244, 245, 247, 0.22);
+}
+
+.search-chip.focused {
+    background: var(--fg);
+    color: var(--bg);
+    border-color: #fff;
+}
+
+.search-recent {
+    display: flex;
+    align-items: center;
+    height: 84px;
+    padding: 0 24px;
+    margin: 0 -24px;
+    border-radius: 16px;
+    font-size: 32px;
+    color: #e9ebef;
+}
+
+.search-recent svg { width: 30px; height: 30px; margin-right: 26px; opacity: 0.5; flex: none; }
+
+.search-recent.focused {
+    background: var(--fg);
+    color: var(--bg);
+}
+
+.search-note {
+    position: absolute;
+    right: var(--edge);
+    bottom: 56px;
+    font-size: 22px;
+    color: var(--faint);
+}
+
+/* The search screen is a full-screen layer; keep the hint bar and toasts above it. */
+.hints,
+#toast {
+    z-index: 10;
 }

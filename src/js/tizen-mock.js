@@ -51,7 +51,9 @@
     function later(fn) { setTimeout(fn, 60); }
 
     window.tizen = {
+        ApplicationControl: function (operation, uri) { this.operation = operation; this.uri = uri; },
         application: {
+            launchAppControl: function (control, id, ok) { if (ok) later(ok); },
             getAppsInfo: function (ok) { later(function () { ok(apps.slice()); }); },
             launch: function (id, ok, err) {
                 console.log('[mock] launch', id);

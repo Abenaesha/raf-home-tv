@@ -17,11 +17,17 @@ window.BRANDS = [
     { key: 'plex', match: /plex/i, mark: 'plex', bg: '#1f1f1f', fg: '#e5a00d' },
     { key: 'twitch', match: /twitch/i, mark: 'twitch', bg: '#9146ff', fg: '#fff' },
     { key: 'tf1', match: /tf1/i, text: 'TF1+', bg: 'linear-gradient(135deg,#071a4d,#1d4ed8)', fg: '#fff' },
+    // UK broadcasters: typographic tiles, because their apps' own icons render badly on this TV.
+    // `size` sets the wordmark's font size in px (default 60) for longer names.
+    { key: 'iplayer', match: /iplayer/i, text: 'iPlayer', size: 54, bg: 'linear-gradient(135deg,#ff4c98,#9c0f6f)', fg: '#fff' },
+    { key: 'itvx', match: /itvx|\bitv\b/i, text: 'ITVX', bg: 'linear-gradient(135deg,#120a3a,#4b2bd1)', fg: '#fff' },
+    { key: 'channel4', match: /channel ?4|\b4od\b/i, text: 'Channel 4', size: 44, bg: 'linear-gradient(135deg,#0d0d0d,#3d3d3d)', fg: '#fff' },
     { key: 'crunchyroll', match: /crunchyroll/i, mark: 'crunchyroll', bg: '#f47521', fg: '#fff' },
 
     // Consoles (used by inputs in config.js)
     { key: 'playstation', mark: 'playstation', bg: 'linear-gradient(135deg,#00205c,#0070d1)', fg: '#fff' },
     { key: 'xbox', mark: 'xbox', bg: 'linear-gradient(135deg,#0a3a0a,#16a016)', fg: '#fff' },
+    { key: 'mac', mark: 'mac', bg: 'linear-gradient(135deg,#2b2f36,#5b6270)', fg: '#fff' },
     { key: 'switch', mark: 'nintendoswitch', bg: 'linear-gradient(135deg,#b3000e,#ff2a2a)', fg: '#fff' }
 ];
 

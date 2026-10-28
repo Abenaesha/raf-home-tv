@@ -1,6 +1,8 @@
 # build output
 dist/
 *.wgt
+# ...except the ready-to-install package linked from the README
+!release/*.wgt
 *.tpk
 .buildResult/
 

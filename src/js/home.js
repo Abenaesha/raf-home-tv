@@ -66,6 +66,7 @@
             if (item.brand.text) {
                 var word = el('div', 'wordmark', item.brand.text);
                 word.style.color = item.brand.fg;
+                if (item.brand.size) word.style.setProperty('--wm-size', item.brand.size + 'px');
                 tile.appendChild(word);
             } else {
                 tile.appendChild(markEl(item.brand));
@@ -129,7 +130,7 @@
     // Console tile for Settings lists: brand colours and logo only.
     function miniInputTile(input) {
         var brand = findBrand(input.brand || '');
-        return miniTile({ label: input.label, brand: brand && { key: brand.key, bg: brand.bg, fg: brand.fg, mark: brand.mark, text: brand.text } });
+        return miniTile({ label: input.label, brand: brand && { key: brand.key, bg: brand.bg, fg: brand.fg, mark: brand.mark, text: brand.text, size: brand.size } });
     }
 
     // ---------- Home content

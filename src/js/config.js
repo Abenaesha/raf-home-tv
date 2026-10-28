@@ -17,9 +17,9 @@ window.LAUNCHER_CONFIG = {
     apps: [
         { match: ['tizentube', 'youtube'], label: 'YouTube', brand: 'youtube' },
         { id: 'org.tizen.netflix-app', match: 'netflix', label: 'Netflix' },
-        { match: 'iplayer', label: 'BBC iPlayer' },
-        { match: ['itvx', '\\bitv\\b'], label: 'ITVX' },
-        { match: ['channel ?4', '\\b4od\\b'], label: 'Channel 4' },
+        { match: 'iplayer', label: 'BBC iPlayer', brand: 'iplayer' },
+        { match: ['itvx', '\\bitv\\b'], label: 'ITVX', brand: 'itvx' },
+        { match: ['channel ?4', '\\b4od\\b'], label: 'Channel 4', brand: 'channel4' },
         { match: 'prime ?video', label: 'Prime Video' },
         { match: 'disney', label: 'Disney+' },
         { match: 'spotify', label: 'Spotify' },
@@ -28,14 +28,14 @@ window.LAUNCHER_CONFIG = {
         { match: ['overscan', '^org\\.tizen\\.browser$', '^internet$'], label: 'Web' }
     ],
 
-    // HDMI ports shown in the second row. Rename them (e.g. "PlayStation") from Settings → Inputs
-    // on the TV, or here with a brand: 'playstation' | 'xbox' | 'switch'.
+    // HDMI inputs shown in the second row. The Mac is assumed on HDMI 1: if it is on another
+    // port, change it on the TV in Settings → Inputs (or here). Add more devices the same way;
+    // brands with tiles: 'mac' | 'playstation' | 'xbox' | 'switch'.
     inputs: [
-        { hdmi: 1, label: 'Input 1' },
-        { hdmi: 2, label: 'Input 2' },
-        { hdmi: 3, label: 'Input 3' }
+        { hdmi: 1, label: 'Mac', brand: 'mac' }
     ],
 
+    // How an input tile switches the TV: 'switch+viewer' (default), 'switch' or 'inapp'.
     inputMethod: 'switch+viewer',
 
     locale: 'en-GB',

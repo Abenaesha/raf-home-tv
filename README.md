@@ -1,3 +1,7 @@
+> **Raf Home** is a fork of [Arn0 Launcher](https://github.com/NelsonEU/arn0-tv) by Arnaud Etienne (MIT),
+> adapted for a Samsung UE58AU7100 (2021, Tizen 6.0). See [RAF-SETUP.md](RAF-SETUP.md) for what changed
+> and how to install. A ready-to-install package is in [`release/raf-home.wgt`](release/raf-home.wgt).
+
 # Arn0 Launcher
 
 A quieter home screen for a Samsung Tizen TV: a clock, a row of your apps, a row of your consoles,

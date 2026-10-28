@@ -17,7 +17,7 @@ Fork of Arn0 Launcher (MIT, Arnaud Etienne), adapted for this TV.
 ## Install
 1. TV: Apps, press 1 2 3 4 5, Developer Mode On, Host PC IP = your computer's IP, restart (hold power).
 2. Computer on the same Wi-Fi: install Apps2Samsung, let it find the TV (192.168.1.102).
-3. Choose "Custom WGT File" and pick `raf-home.wgt`. It signs and installs it.
+3. Choose "Custom WGT File" and pick `release/raf-home.wgt`. It signs and installs it.
 4. On the TV: Apps → Raf Home.
 
 Updates: install a new build the same way, from the same computer, so the certificate matches.

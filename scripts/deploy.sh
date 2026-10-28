@@ -28,10 +28,15 @@ if ! nc -z -G 3 "$TV" 26101 >/dev/null 2>&1; then
     exit 1
 fi
 
-# RAF_ALLOW_REMOVE=1 lets the CLI uninstall the TV's copy first when only that works, e.g. when
-# the installed copy was signed by a different certificate. It erases Raf Home's settings on the TV.
+# RAF_ALLOW_REMOVE=1 uninstalls the TV's copy first, for when it was signed by a different
+# certificate. The CLI's own --allow-remove did not clear the copy on this TV, so it is removed
+# explicitly. It erases Raf Home's settings on the TV.
 EXTRA=""
-[ -n "${RAF_ALLOW_REMOVE:-}" ] && EXTRA="--allow-remove"
+if [ -n "${RAF_ALLOW_REMOVE:-}" ]; then
+    APP_ID=$(sed -n 's/.*<tizen:application id="\([^"]*\)".*/\1/p' src/config.xml)
+    echo "raf-home: removing the TV's copy ($APP_ID) first..."
+    "$CLI" uninstall "$APP_ID" --tv "$TV" || echo "raf-home: removal failed; trying the install anyway."
+fi
 
 echo "raf-home: installing $WGT on the TV at $TV..."
 LOG=$(mktemp)
